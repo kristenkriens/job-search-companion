@@ -1,13 +1,13 @@
 const app = {};
 
+app.ipAddressFinderUrl = 'http://api.ipify.org?format=json';
+
 app.indeedApiUrl = 'http://api.indeed.com/ads/apisearch';
 app.indeedApiKey = '';
 
 app.getIpAddress = function() {
   $.ajax({
-		url: app.ipAddressFinderUrl,
-		method: 'GET',
-		dataType: 'json'
+		url: app.ipAddressFinderUrl
 	}).then(function(address) {
 		app.getJobs(address.ip);
 	});
@@ -15,7 +15,7 @@ app.getIpAddress = function() {
 
 app.getJobs = function(ipAddress) {
   $.ajax({
-		url: indeedApiUrl,
+		url: app.indeedApiUrl,
 		method: 'GET',
 		dataType: 'jsonp',
     data: {
@@ -25,7 +25,7 @@ app.getJobs = function(ipAddress) {
       useragent: navigator.userAgent,
       userip: ipAddress,
       limit: '200',
-      latLong: '1'
+      latlong: '1'
     }
 	}).then(function(results) {
 		console.log(results);
