@@ -6,8 +6,8 @@ app.indeedApiUrl = 'http://api.indeed.com/ads/apisearch';
 app.indeedApiKey = '';
 
 app.getIpAddress = function() {
-  $.get(app.ipAddressFinderUrl, function(address) {
-    app.getJobs(address.ip);
+  $.get(app.ipAddressFinderUrl, function(results) {
+    app.getJobs(results.ip);
   });
 }
 
