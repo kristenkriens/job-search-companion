@@ -64,6 +64,16 @@ app.getGeolocation = function() {
   }
 }
 
+// Checks if No Preference is selected and deselects others if so
+app.checkNoPreference = function(that) {
+  if(that.is('#noPreference')) {
+    $('.form__element--job-type input').prop('checked', false).removeAttr('checked');
+    that.prop('checked', true).attr('checked', 'checked');
+  } else {
+    $('.form__element--job-type input#noPreference').prop('checked', false).removeAttr('checked');
+  }
+}
+
 // Checks form inputs and removes disabled attribute if they are all filled out
 app.checkForm = function() {
   app.query = $('.form__element--query input').val();
@@ -157,27 +167,22 @@ app.init = function() {
   app.getIpAddress();
   app.enableAutocomplete();
 
-  $('.form').on('submit', function(e) {
-    e.preventDefault();
-    app.setLocation();
-    app.getJobs();
+  $('.form__element--location .units').on('click', function() {
+    app.getGeolocation();
+  });
+
+  $('.form__element--job-type input').on('click', function() {
+    app.checkNoPreference($(this));
   });
 
   $('.form').on('change', function() {
     app.checkForm();
   });
 
-  $('.form__element--location .units').on('click', function() {
-    app.getGeolocation();
-  });
-
-  $('.form__element--job-type input').on('click', function() {
-    $('.form__element--job-type input#noPreference').prop('checked', false).removeAttr('checked');
-  });
-
-  $('.form__element--job-type input#noPreference').on('click', function() {
-    $('.form__element--job-type input').prop('checked', false).removeAttr('checked');
-    $(this).prop('checked', true).attr('checked', 'checked');
+  $('.form').on('submit', function(e) {
+    e.preventDefault();
+    app.setLocation();
+    app.getJobs();
   });
 }
 
