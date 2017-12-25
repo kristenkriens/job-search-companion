@@ -1,0 +1,164 @@
+.form {
+  max-width: 708px;
+  width: calc(100% + 20px);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  margin: 0 -10px;
+  position: relative;
+  padding-bottom: 100px;
+
+  ul {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+  li {
+    width: 33.33%;
+
+    @media (max-width: $sm-width) {
+      width: 50%;
+    }
+  }
+
+  &__element {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 25px;
+    padding: 0 10px;
+    width: 100%;
+    position: relative;
+
+    &:last-of-type {
+      margin-bottom: 0;
+    }
+
+    &--query {
+      width: calc(50% - 20px);
+
+      @media (max-width: 650px) {
+    		width: 100%;
+    	}
+    }
+
+    &--location {
+      width: calc(50% + 20px);
+
+      @media (max-width: 650px) {
+    		width: 100%;
+    	}
+    }
+
+    &--post-age {
+      width: 33.33%;
+
+      @media (max-width: 650px) {
+    		width: calc(50% - 30px);
+    	}
+    }
+
+    &--radius {
+      width: calc(33.33% + 60px);
+
+      @media (max-width: 650px) {
+    		width: calc(50% + 30px);
+    	}
+    }
+
+    &--job-type {
+      width: 75%;
+
+      @media (max-width: $md-width) {
+    		width: 100%;
+    	}
+    }
+
+    label, legend {
+      margin-bottom: 5px;
+      width: 100%;
+    }
+
+    .units {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: $grey-blue;
+      padding: 10px;
+      height: 40px;
+      font-size: 16px;
+      position: absolute;
+      bottom: 0;
+      right: 10px;
+      width: 40px;
+
+      &--select {
+        padding: 0;
+        width: 60px;
+
+        &:after {
+          position: absolute;
+          right: 10px;
+          top: 11px;
+          content: '\f107';
+          font-family: 'FontAwesome';
+          pointer-events: none;
+        }
+      }
+
+      select {
+        padding-right: 25px;
+        color: $white;
+        cursor: pointer;
+      }
+    }
+  }
+
+  &__submit {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    margin: 0 10px;
+  }
+}
+
+.map {
+  width: 100%;
+  height: 100vh;
+
+  &--hidden {
+    display: none;
+  }
+}
+
+
+.pac {
+	&-container {
+		box-shadow: none;
+		border-top: none;
+		color: $grey-blue;
+		font-family: $body-font;
+
+		&:after {
+			background-image: none!important;
+		  height: 0px;
+		}
+	}
+
+	&-icon {
+		display: none;
+	}
+
+	&-item {
+		padding: 0 10px;
+		font-size: 13px;
+
+		&:hover {
+			background-color: rgba($light-grey, 0.5);
+		}
+	}
+}
