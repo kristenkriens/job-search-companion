@@ -9,82 +9,102 @@
   <link href='https://api.mapbox.com/mapbox.js/v3.1.1/mapbox.css' rel='stylesheet' />
   <link rel="stylesheet" type="text/css" href="dist/css/styles.css">
 </head>
-<body>
+<body class="logged-in">
   <a href="#main" class="skipnav accessible">Skip to Main Content</a>
-  <div class="wrapper wrapper--outer">
-    <header>
-      <div class="wrapper">
-        <h1>Job Search Companion</h1>
+  <header class="header">
+    <h1>Job Search Companion</h1>
+  </header>
+  <aside class="sidebar"></aside>
+  <main id="main" class="main">
+    <div class="topbar">
+      <div class="topbar__current">Home</div>
+      <div class="topbar__profile">
+        <div class="topbar__profile-status topbar__profile-status--logged-in">
+          <img src="dist/images/kristen.jpg">
+          <p>Hello, Kristen!<i class="fa fa-angle-down" aria-hidden="true"></i></p>
+          <ul class="topbar__profile-dropdown">
+            <li>Log Out</li>
+            <li>My Profile</li>
+          </ul>
+        </div>
+        <div class="topbar__profile-status topbar__profile-status--logged-out">
+          <p>Log In / Create Account</p>
+        </div>
       </div>
-    </header>
-    <main id="main">
-      <div class="wrapper">
+    </div>
+    <div class="content content--search">
+      <div class="content-inner content-inner--search">
         <form class="form">
-          <div class="form__element form__element--query">
+          <div class="form__element form__element--half">
             <label for="query">Job Title / Keywords / Company</label>
             <input type="text" id="query" placeholder="e.g. Front End Developer">
           </div>
-          <div class="form__element form__element--location form__element--units">
+          <div class="form__element form__element--half">
             <label for="location">Address / Location</label>
             <input type="text" id="location" placeholder="e.g. Toronto, ON">
-            <button type="button" class="units">
+            <button type="button" class="units units--square">
               <i class="fa fa-location-arrow" aria-hidden="true"></i>
               <span class="accessible">Get Geolocation</span>
             </button>
           </div>
-          <div class="form__element form__element--post-age">
+          <div class="form__element form__element--half form__element--half-small">
             <label for="postAge">Max Days Old</label>
             <input type="number" id="postAge" placeholder="e.g. 7">
           </div>
-          <div class="form__element form__element--radius form__element--units">
+          <div class="form__element form__element--half form__element--half-small">
             <label for="radius">Search Radius</label>
             <input type="number" id="radius" placeholder="e.g. 10">
             <div class="units units--select">
-              <select id="distanceUnits">
+              <select id="radiusUnits">
                 <option selected>km</option>
                 <option>mi</option>
               </select>
             </div>
           </div>
-          <div class="form__element form__element--job-type">
+          <div class="form__element">
             <legend>Job Type</legend>
             <ul>
               <li>
-              <input type="checkbox" id="noPreference" name="jobType" value="nopreference" class="accessible" checked>
-              <label for="noPreference">No Preference</label>
-            </li>
-            <li>
-              <input type="checkbox" id="fulltime" name="jobType" value="fulltime" class="accessible">
-              <label for="fulltime">Full Time</label>
-            </li>
-            <li>
-              <input type="checkbox" id="parttime" name="jobType" value="parttime" class="accessible">
-              <label for="parttime">Part Time</label>
-            </li>
-            <li>
-              <input type="checkbox" id="contract" name="jobType" value="contract" class="accessible">
-              <label for="contract">Contract</label>
-            </li>
-            <li>
-              <input type="checkbox" id="internship" name="jobType" value="internship" class="accessible">
-              <label for="internship">Internship</label>
-            </li>
-            <li>
-              <input type="checkbox" id="temporary" name="jobType" value="temporary" class="accessible">
-              <label for="temporary">Temporary</label>
-            </li>
+                <input type="checkbox" id="noPreference" name="jobType" value="nopreference" class="accessible" checked>
+                <label for="noPreference">No Preference</label>
+              </li>
+              <li>
+                <input type="checkbox" id="fulltime" name="jobType" value="fulltime" class="accessible">
+                <label for="fulltime">Full Time</label>
+              </li>
+              <li>
+                <input type="checkbox" id="parttime" name="jobType" value="parttime" class="accessible">
+                <label for="parttime">Part Time</label>
+              </li>
+              <li>
+                <input type="checkbox" id="contract" name="jobType" value="contract" class="accessible">
+                <label for="contract">Contract</label>
+              </li>
+              <li>
+                <input type="checkbox" id="internship" name="jobType" value="internship" class="accessible">
+                <label for="internship">Internship</label>
+              </li>
+              <li>
+                <input type="checkbox" id="temporary" name="jobType" value="temporary" class="accessible">
+                <label for="temporary">Temporary</label>
+              </li>
+            </ul>
           </div>
           <button type="submit" class="form__submit" disabled>Search</button>
+          <!-- Categories - Find Jobs (Search Form, Map View, List View), Track Applications (Overview/General Info, Follow Ups, Interview Tracker), and Analyze Correspondence -->
         </form>
       </div>
-    </main>
-    <footer>
-      <div class="wrapper">
-        <p>&copy; <a href="http://kristenkriens.com" target="_blank">Kristen Kriens</a> 2017</p>
+      <div id="map" class="content-inner content-inner--map">
+        <h2>Please fill out the form first!</h2>
       </div>
-    </footer>
-  </div>
-  <div id="map" class="map map--hidden"></div>
+      <div class="content-inner content-inner--list">
+        <h2>Please fill out the form first!</h2>
+      </div>
+    </div>
+  </main>
+  <footer class="footer">
+    <p>&copy; <a href="http://kristenkriens.com" target="_blank">Kristen Kriens</a> 2017</p>
+  </footer>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA5eex_nI4Hor9fxyrk_TWlfDdmuZyC2wo&libraries=places" type="text/javascript"></script>
   <script src='https://api.mapbox.com/mapbox.js/v3.1.1/mapbox.js'></script>
