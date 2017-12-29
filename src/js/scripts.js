@@ -106,6 +106,17 @@ app.removeOverlay = function(that) {
   });
 }
 
+// Checks if email address is valid
+app.checkEmail = function(email) {
+  let testEmail = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+
+  if(testEmail.test(email) && email !== '') {
+    return true;
+  } else {
+    return false;
+  }
+}
+
 // Checks if all the info needed from the overlay is filled out and enables submit if so
 app.checkOverlayForm = function() {
   app.email = $('.overlay input#email').val();
@@ -115,13 +126,13 @@ app.checkOverlayForm = function() {
     app.name = $('.overlay--create-account input#name').val();
     let reEnterPassword = $('.overlay--create-account input#reEnterPassword').val();
 
-    if(app.name !== '' && app.email !== '' && app.password !== '' && (app.password === reEnterPassword)) {
+    if(app.name !== '' && app.checkEmail(app.email) && app.password !== '' && (app.password === reEnterPassword)) {
       $('.overlay__submit').removeAttr('disabled');
   	} else {
       $('.overlay__submit').attr('disabled', 'disabled');
   	}
   } else if($('.overlay').hasClass('overlay--login')) {
-    if(app.email !== '' && app.password !== '') {
+    if(app.checkEmail(app.email) && app.password !== '') {
       $('.overlay__submit').removeAttr('disabled');
   	} else {
       $('.overlay__submit').attr('disabled', 'disabled');
