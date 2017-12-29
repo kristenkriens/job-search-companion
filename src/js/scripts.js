@@ -117,7 +117,7 @@ app.checkEmail = function(email) {
   }
 }
 
-// Checks if all the info needed from the overlay is filled out and enables submit if so
+// Checks overlay form inputs and removes disabled attribute if they are all filled out
 app.checkOverlayForm = function() {
   app.email = $('.overlay input#email').val();
   app.password = $('.overlay input#password').val();
@@ -267,8 +267,8 @@ app.checkNoPreference = function(that) {
   }
 }
 
-// Checks form inputs and removes disabled attribute if they are all filled out
-app.checkForm = function() {
+// Checks search form inputs and removes disabled attribute if they are all filled out
+app.checkSearchForm = function() {
   app.query = $('input#query').val();
   app.location = $('#location').val();
   app.postAge = $('input#postAge').val();
@@ -283,9 +283,9 @@ app.checkForm = function() {
   }
 
   if(app.query !== '' && app.location !== '' && app.postAge !== '' && app.radius !== '' && app.radiusUnits !== '' && app.jobType !== '' && app.country !== '') {
-    $('.form__submit').removeAttr('disabled');
+    $('.content-inner--search .form__submit').removeAttr('disabled');
 	} else {
-    $('.form__submit').attr('disabled', 'disabled');
+    $('.content-inner--search .form__submit').attr('disabled', 'disabled');
 	}
 
   if(app.jobType === 'nopreference') {
@@ -351,6 +351,15 @@ app.enableMap = function() {
   L.mapbox.accessToken = 'pk.eyJ1Ijoia3Jpc3RlbmtyaWVucyIsImEiOiJjamJsYXY1cW80b3MzMnhxZnVoM3Z4NWs0In0.eAiFLvvJeH2N8DxHWDNWYA';
 
   app.map = L.mapbox.map('map', 'mapbox.streets').setView([app.lat, app.lng], 12);
+}
+
+// Checks analyze form textarea and removes disabled attribute if it is filled out
+app.checkAnalyzeForm = function() {
+  if($('textarea#correspondenceText').val() !== '') {
+    $('.content-inner--analyze-correspondence .form__submit').removeAttr('disabled');
+  } else {
+    $('.content-inner--analyze-correspondence .form__submit').attr('disabled', 'disabled');
+  }
 }
 
 // Opens and closes the primary item in the sidebar
@@ -442,11 +451,15 @@ app.init = function() {
     app.checkNoPreference($(this));
   });
 
-  $('form').on('change keyup', function() {
-    app.checkForm();
+  $('.content-inner--search form').on('change keyup', function() {
+    app.checkSearchForm();
   });
 
-  $('form').on('submit', function(e) {
+  $('.content-inner--analyze-correspondence form').on('change keyup', function() {
+    app.checkAnalyzeForm();
+  });
+
+  $('.content-inner--search form').on('submit', function(e) {
     e.preventDefault();
 
     app.getLocation();

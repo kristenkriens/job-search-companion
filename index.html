@@ -111,30 +111,45 @@
               </li>
             </ul>
           </div>
-          <button type="submit" class="form__submit" disabled>Search</button>
+          <div class="form__bottom">
+            <button type="submit" class="form__submit" disabled>Search</button>
+            <p class="form__save">Save Search</p>
+          </div>
         </form>
+        <div class="saved-searches">
+          <h2>Saved Searches</h2>
+          <p>You don't have any saved searches.</p>
+        </h2>
       </div>
       <div id="map" class="content-inner content-inner--map">
-        <h2>Please fill out the form first!</h2>
+        <h3>Please fill out the form first!</h3>
       </div>
       <div class="content-inner content-inner--list">
-        <h2>Please fill out the form first!</h2>
+        <h3>Please fill out the form first!</h3>
       </div>
       <div class="content-inner content-inner--listing"></div>
       <div class="content-inner content-inner--overview">
-        <h2>You haven't applied to any jobs yet!</h2>
+        <h3>You haven't applied to any jobs yet!</h3>
       </div>
       <div class="content-inner content-inner--follow-up">
-        <h2>You haven't applied to any jobs yet!</h2>
+        <h3>You haven't applied to any jobs yet!</h3>
       </div>
       <div class="content-inner content-inner--interview-tracker">
-        <h2>You don't have any interviews yet!</h2>
+        <h3>You don't have any interviews yet!</h3>
       </div>
       <div class="content-inner content-inner--analyze-applications">
-        <h2>You haven't applied to any jobs yet!</h2>
+        <h3>You haven't applied to any jobs yet!</h3>
       </div>
       <div class="content-inner content-inner--analyze-correspondence">
-        <h2>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quam eveniet asperiores consequuntur laborum, atque harum, delectus, in velit aspernatur minima ullam reprehenderit natus assumenda odit quae vero quasi culpa at!</h2>
+        <form class="form">
+          <div class="form__element">
+            <label for="correspondence">Text To Analyze</label>
+            <textarea id="correspondence"></textarea>
+          </div>
+          <div class="form__bottom">
+            <button type="submit" class="form__submit" disabled>Analyze</button>
+          </div>
+        </form>
       </div>
     </div>
   </main>

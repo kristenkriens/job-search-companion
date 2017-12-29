@@ -1,3 +1,15 @@
+.logged-out {
+  .topbar__profile-status--logged-in, .saved-searches, .form__save {
+    display: none;
+  }
+}
+
+.logged-in {
+  .topbar__profile-status--logged-out {
+    display: none;
+  }
+}
+
 .search {
   .content-inner--search {
     display: block;
@@ -286,20 +298,8 @@
         }
       }
 
-      &--logged-in {
-        .fa {
-          margin-left: 10px
-        }
-
-        .logged-out & {
-          display: none;
-        }
-      }
-
-      &--logged-out {
-        .logged-in & {
-          display: none;
-        }
+      .fa {
+        margin-left: 10px
       }
     }
 
@@ -342,11 +342,21 @@
   justify-content: space-between;
   align-items: flex-end;
 
-  &__submit {
-    margin-top: 20px;
+  &__bottom {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+  }
 
-    @media (max-width: $sm-width) {
-      margin-top: 10px;
+  &__save {
+    font-weight: 400;
+    margin-left: 20px;
+    text-decoration: underline;
+    transition: 200ms color ease;
+    cursor: pointer;
+
+    &:hover {
+      color: $blurple;
     }
   }
 }
@@ -372,6 +382,17 @@
       @media (max-width: $sm-width) {
         width: 100%;
       }
+    }
+  }
+
+  &--select {
+    &:after {
+      position: absolute;
+      right: 10px;
+      bottom: 9px;
+      content: '\f107';
+      font-family: 'FontAwesome';
+      pointer-events: none;
     }
   }
 
@@ -422,24 +443,24 @@
     }
 
     &--select {
+      select {
+        height: 40px;
+        color: $white;
+        background-color: $grey-blue;
+        transition: 200ms background-color ease;
+
+        &:hover {
+          background-color: $blurple;
+        }
+      }
+
       &:after {
         position: absolute;
         right: 10px;
-        top: 11px;
+        bottom: 9px;
         content: '\f107';
         font-family: 'FontAwesome';
         pointer-events: none;
-      }
-    }
-
-    select {
-      height: 40px;
-      color: $white;
-      background-color: $grey-blue;
-      transition: 200ms background-color ease;
-
-      &:hover {
-        background-color: $blurple;
       }
     }
   }
@@ -466,7 +487,7 @@
     box-shadow: 0 0 5px 0 rgba($grey, 0.5);
     height: calc(100vh - 120px);
 
-    h2 {
+    h3 {
       text-align: center;
     }
   }
@@ -568,5 +589,13 @@
 
   &__submit {
     margin: 10px 0 20px;
+  }
+}
+
+.saved-searches {
+  margin-top: 30px;
+
+  h2 {
+    margin-bottom: 10px;
   }
 }
