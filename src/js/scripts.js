@@ -355,7 +355,7 @@ app.enableMap = function() {
 
 // Checks analyze form textarea and removes disabled attribute if it is filled out
 app.checkAnalyzeForm = function() {
-  if($('textarea#correspondenceText').val() !== '') {
+  if($('textarea#correspondence').val() !== '') {
     $('.content-inner--analyze-correspondence .form__submit').removeAttr('disabled');
   } else {
     $('.content-inner--analyze-correspondence .form__submit').attr('disabled', 'disabled');
