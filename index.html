@@ -9,22 +9,43 @@
   <link href='https://api.mapbox.com/mapbox.js/v3.1.1/mapbox.css' rel='stylesheet' />
   <link rel="stylesheet" type="text/css" href="dist/css/styles.css">
 </head>
-<body class="logged-in">
+<body class="logged-out">
   <a href="#main" class="skipnav accessible">Skip to Main Content</a>
-  <header class="header">
-    <h1>Job Search Companion</h1>
-  </header>
-  <aside class="sidebar"></aside>
+  <aside class="sidebar">
+    <header class="header">
+      <h1>Job Search Companion</h1>
+    </header>
+    <nav>
+      <ul class="sidebar__primary">
+        <li class="sidebar__primary-item"><i class="fa fa-search" aria-hidden="true"></i>Find Jobs</li>
+        <ul class="sidebar__secondary">
+          <li class="sidebar__secondary-item sidebar__secondary-item--search">Search Form</li>
+          <li class="sidebar__secondary-item sidebar__secondary-item--map">Map View</li>
+          <li class="sidebar__secondary-item sidebar__secondary-item--list">List View</li>
+          <li class="sidebar__secondary-item sidebar__secondary-item--listing">Listing</li>
+        </ul>
+        <li class="sidebar__primary-item"><i class="fa fa-book" aria-hidden="true"></i>Track Applications</li>
+        <ul class="sidebar__secondary">
+          <li class="sidebar__secondary-item sidebar__secondary-item--overview">Overview</li>
+          <li class="sidebar__secondary-item sidebar__secondary-item--follow-up">Follow Ups</li>
+          <li class="sidebar__secondary-item sidebar__secondary-item--interview-tracker">Interview Tracker</li>
+        </ul>
+        <li class="sidebar__primary-item"><i class="fa fa-line-chart" aria-hidden="true"></i>Analyze</li>
+        <ul class="sidebar__secondary">
+          <li class="sidebar__secondary-item sidebar__secondary-item--analyze-applications">Applications</li>
+          <li class="sidebar__secondary-item sidebar__secondary-item--analyze-correspondence">Correspondence</li>
+        </ul>
+      </ul>
+    </nav>
+  </aside>
   <main id="main" class="main">
     <div class="topbar">
-      <div class="topbar__current">Home</div>
+      <div class="topbar__current"><span class="topbar__current-parent"></span><span class="topbar__current-self"></span></div>
       <div class="topbar__profile">
         <div class="topbar__profile-status topbar__profile-status--logged-in">
-          <img src="dist/images/kristen.jpg">
-          <p>Hello, Kristen!<i class="fa fa-angle-down" aria-hidden="true"></i></p>
+          <p>Hello, <span class="topbar__profile-name">Anonymous</span>!<i class="fa fa-angle-down" aria-hidden="true"></i></p>
           <ul class="topbar__profile-dropdown">
-            <li>Log Out</li>
-            <li>My Profile</li>
+            <li class="topbar__profile-dropdown-logout">Log Out</li>
           </ul>
         </div>
         <div class="topbar__profile-status topbar__profile-status--logged-out">
@@ -91,7 +112,6 @@
             </ul>
           </div>
           <button type="submit" class="form__submit" disabled>Search</button>
-          <!-- Categories - Find Jobs (Search Form, Map View, List View), Track Applications (Overview/General Info, Follow Ups, Interview Tracker), and Analyze Correspondence -->
         </form>
       </div>
       <div id="map" class="content-inner content-inner--map">
@@ -99,6 +119,22 @@
       </div>
       <div class="content-inner content-inner--list">
         <h2>Please fill out the form first!</h2>
+      </div>
+      <div class="content-inner content-inner--listing"></div>
+      <div class="content-inner content-inner--overview">
+        <h2>You haven't applied to any jobs yet!</h2>
+      </div>
+      <div class="content-inner content-inner--follow-up">
+        <h2>You haven't applied to any jobs yet!</h2>
+      </div>
+      <div class="content-inner content-inner--interview-tracker">
+        <h2>You don't have any interviews yet!</h2>
+      </div>
+      <div class="content-inner content-inner--analyze-applications">
+        <h2>You haven't applied to any jobs yet!</h2>
+      </div>
+      <div class="content-inner content-inner--analyze-correspondence">
+        <h2>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quam eveniet asperiores consequuntur laborum, atque harum, delectus, in velit aspernatur minima ullam reprehenderit natus assumenda odit quae vero quasi culpa at!</h2>
       </div>
     </div>
   </main>
@@ -108,6 +144,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA5eex_nI4Hor9fxyrk_TWlfDdmuZyC2wo&libraries=places" type="text/javascript"></script>
   <script src='https://api.mapbox.com/mapbox.js/v3.1.1/mapbox.js'></script>
+  <script src="https://www.gstatic.com/firebasejs/4.8.1/firebase.js"></script>
   <script src="dist/js/scripts.min.js"></script>
 </body>
 </html>
