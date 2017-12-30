@@ -42,14 +42,15 @@
     <div class="topbar">
       <div class="topbar__current"><span class="topbar__current-parent"></span><span class="topbar__current-self"></span></div>
       <div class="topbar__profile">
+        <div class="topbar__profile-status topbar__profile-status--logged-out">
+          <p class="login">Log In / Create Account</p>
+        </div>
         <div class="topbar__profile-status topbar__profile-status--logged-in">
           <p>Hello, <span class="topbar__profile-name">Anonymous</span>!<i class="fa fa-angle-down" aria-hidden="true"></i></p>
           <ul class="topbar__profile-dropdown">
-            <li class="topbar__profile-dropdown-logout">Log Out</li>
+            <li class="topbar__profile-dropdown-item logout">Log Out</li>
+            <li class="topbar__profile-dropdown-item my-account">My Profile</li>
           </ul>
-        </div>
-        <div class="topbar__profile-status topbar__profile-status--logged-out">
-          <p>Log In / Create Account</p>
         </div>
       </div>
     </div>
@@ -113,12 +114,14 @@
           </div>
           <div class="form__bottom">
             <button type="submit" class="form__submit" disabled>Search</button>
-            <p class="form__save">Save Search</p>
           </div>
         </form>
-        <div class="saved-searches">
-          <h2>Saved Searches</h2>
-          <p>You don't have any saved searches.</p>
+        <div class="content-inner__logged-in">
+          <p class="form__save">Save Search</p>
+          <div class="saved-searches">
+            <h2>Saved Searches</h2>
+            <p>You don't have any saved searches.</p>
+          </div>
         </div>
       </div>
       <div id="map" class="content-inner content-inner--map">
@@ -129,20 +132,45 @@
       </div>
       <div class="content-inner content-inner--listing"></div>
       <div class="content-inner content-inner--overview">
-        <h3>You haven't applied to any jobs yet!</h3>
+        <div class="content-inner__logged-out">
+          <h3>You need to be logged in to view this page!</h3>
+          <button class="login">Log In</button>
+        </div>
+        <div class="content-inner__logged-in">
+          <h3>You haven't applied to any jobs yet!</h3>
+        </div>
       </div>
       <div class="content-inner content-inner--follow-up">
-        <h3>You haven't applied to any jobs yet!</h3>
+        <div class="content-inner__logged-out">
+          <h3>You need to be logged in to view this page!</h3>
+          <button class="login">Log In</button>
+        </div>
+        <div class="content-inner__logged-in">
+          <h3>You haven't applied to any jobs yet!</h3>
+        </div>
       </div>
       <div class="content-inner content-inner--interview-tracker">
-        <h3>You don't have any interviews yet!</h3>
+        <div class="content-inner__logged-out">
+          <h3>You need to be logged in to view this page!</h3>
+          <button class="login">Log In</button>
+        </div>
+        <div class="content-inner__logged-in">
+          <h3>You don't have any interviews yet!</h3>
+        </div>
       </div>
       <div class="content-inner content-inner--analyze-applications">
-        <h3>You haven't applied to any jobs yet!</h3>
+        <div class="content-inner__logged-out">
+          <h3>You need to be logged in to view this page!</h3>
+          <button class="login">Log In</button>
+        </div>
+        <div class="content-inner__logged-in">
+          <h3>You haven't applied to any jobs yet!</h3>
+        </div>
       </div>
       <div class="content-inner content-inner--analyze-correspondence">
         <form class="form">
           <div class="form__element">
+            <label for="correspondence">Please enter the text you would like to analyze below:</label>
             <textarea id="correspondence"></textarea>
           </div>
           <div class="form__bottom">

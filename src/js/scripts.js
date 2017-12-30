@@ -403,16 +403,16 @@ app.init = function() {
     app.setCurrentView($(this));
   });
 
-  $('.topbar__profile-status--logged-in p').on('click', function() {
+  $('.topbar__profile-status--logged-in').on('click', function() {
     app.toggleProfileDropdown();
-  });
-
-  $('.topbar__profile-status--logged-out p').on('click', function() {
-    app.generateOverlay('login');
   });
 
   $('body').on('click', '.overlay__close', function() {
     app.removeOverlay();
+  });
+
+  $('.login').on('click', function() {
+    app.generateOverlay('login');
   });
 
   $('body').on('click', '.overlay--login .overlay__link', function() {
@@ -439,7 +439,7 @@ app.init = function() {
     app.checkOverlayForm();
   });
 
-  $('.topbar__profile-dropdown-logout').on('click', function() {
+  $('.logout').on('click', function() {
     app.logout();
   });
 
