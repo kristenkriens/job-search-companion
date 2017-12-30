@@ -395,6 +395,10 @@ app.init = function() {
   app.getIpAddress();
   app.enableAutocomplete();
 
+  $('body').on('submit', 'form', function(e) {
+    e.preventDefault();
+  });
+
   $('.sidebar__primary-item').on('click', function() {
     app.togglePrimaryItem($(this));
   });
@@ -423,15 +427,11 @@ app.init = function() {
     app.generateOverlay('login');
   });
 
-  $('body').on('submit', '.overlay--create-account form', function(e) {
-    e.preventDefault();
-
+  $('body').on('submit', '.overlay--create-account form', function() {
     app.createAccount();
   });
 
-  $('body').on('submit', '.overlay--login form', function(e) {
-    e.preventDefault();
-
+  $('body').on('submit', '.overlay--login form', function() {
     app.login();
   });
 
@@ -459,9 +459,7 @@ app.init = function() {
     app.checkAnalyzeForm();
   });
 
-  $('.content-inner--search form').on('submit', function(e) {
-    e.preventDefault();
-
+  $('.content-inner--search form').on('submit', function() {
     app.getLocation();
     app.getJobs();
     app.setCurrentView($('.sidebar__secondary-item--map'), true);
