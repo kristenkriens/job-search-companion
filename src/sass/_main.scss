@@ -649,7 +649,7 @@
     overflow-x: scroll;
   }
 
-  tr:last-of-type:not(:first-of-type) {
+  tbody tr:last-of-type {
     cursor: pointer;
 
     td {

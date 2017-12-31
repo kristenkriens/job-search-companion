@@ -367,19 +367,19 @@ app.checkAnalyzeForm = function() {
 // Adds a row to the application overview table
 app.addApplication = function() {
   if($('.content-inner--overview tr').length === 1) {
-    $('.content-inner--overview table tr:first-of-type').prepend(`<th></th>`);
+    $('.content-inner--overview thead tr:first-of-type').prepend(`<th></th>`);
   }
 
-  $('.content-inner--overview table').append(`<tr>
+  $('.content-inner--overview tbody').append(`<tr>
     <td><i class="fa fa-times" aria-hidden="true"></i></td>
-    <td><input type="text" id="job-title-${app.newApplicationClicks}"></td>
-    <td><input type="text" id="company-${app.newApplicationClicks}"></td>
-    <td><input type="text" id="location-${app.newApplicationClicks}"></td>
-    <td><input type="text" id="job-posting-${app.newApplicationClicks}"></td>
-    <td><input type="text" id="contact-name-${app.newApplicationClicks}"></td>
-    <td><input type="email" id="contact-email-${app.newApplicationClicks}"></td>
-    <td><input type="text" id="contact-title-${app.newApplicationClicks}"></td>
-    <td><input type="date" id="application-date-${app.newApplicationClicks}"></td>
+    <td><input type="text" id="job-title-${(app.newApplicationClicks + 2)}"></td>
+    <td><input type="text" id="company-${(app.newApplicationClicks + 2)}"></td>
+    <td><input type="text" id="location-${(app.newApplicationClicks + 2)}"></td>
+    <td><input type="text" id="job-posting-${(app.newApplicationClicks + 2)}"></td>
+    <td><input type="text" id="contact-name-${(app.newApplicationClicks + 2)}"></td>
+    <td><input type="email" id="contact-email-${(app.newApplicationClicks + 2)}"></td>
+    <td><input type="text" id="contact-title-${(app.newApplicationClicks + 2)}"></td>
+    <td><input type="date" id="application-date-${(app.newApplicationClicks + 2)}"></td>
   </tr>`);
 
   if($('.content-inner--overview .table').height() > 300) {
@@ -391,10 +391,10 @@ app.addApplication = function() {
 
 // Removes the row in the application over table that was clicked
 app.removeApplication = function(that) {
-  that.parent().parent().remove();
+  that.parent().remove();
 
   if($('.content-inner--overview tr').length === 1) {
-    $('.content-inner--overview th:first-of-type').remove();
+    $('.content-inner--overview thead th:first-of-type').remove();
   }
 
   if($('.content-inner--overview .table').height() < 300) {
@@ -509,7 +509,7 @@ app.init = function() {
     app.addApplication();
   });
 
-  $('body').on('click', '.content-inner--overview .fa-times', function() {
+  $('body').on('click', '.content-inner--overview td:first-of-type', function() {
     app.removeApplication($(this));
   });
 }
