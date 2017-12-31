@@ -112,9 +112,7 @@
               </li>
             </ul>
           </div>
-          <div class="form__bottom">
-            <button type="submit" class="form__submit" disabled>Search</button>
-          </div>
+          <button type="submit" class="form__submit" disabled>Search</button>
         </form>
         <div class="content-inner__logged-in">
           <p class="form__save">Save Search</p>
@@ -137,7 +135,22 @@
           <button class="login">Log In</button>
         </div>
         <div class="content-inner__logged-in">
-          <h3>You haven't applied to any jobs yet!</h3>
+          <div class="table">
+            <table class="table-inner">
+              <tr>
+                <th>Job Title</th>
+                <th>Company</th>
+                <th>Location</th>
+                <th>Job Posting</th>
+                <th>Contact Name</th>
+                <th>Contact Email</th>
+                <th>Contact Title</th>
+                <th>Date</th>
+              </tr>
+            </table>
+          </div>
+          <button class="table__add-new">Add New</button>
+          <button class="table__save">Save</button>
         </div>
       </div>
       <div class="content-inner content-inner--follow-up">
@@ -173,9 +186,7 @@
             <label for="correspondence">Please enter the text you would like to analyze below:</label>
             <textarea id="correspondence"></textarea>
           </div>
-          <div class="form__bottom">
-            <button type="submit" class="form__submit" disabled>Analyze</button>
-          </div>
+          <button type="submit" class="form__submit" disabled>Analyze</button>
         </form>
       </div>
     </div>

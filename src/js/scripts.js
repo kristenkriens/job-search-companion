@@ -5,7 +5,7 @@ app.ipAddressFinderUrl = 'https://ipapi.co/json';
 app.indeedApiUrl = 'http://api.indeed.com/ads/apisearch';
 app.indeedApiKey = '';
 
-app.loggedIn = false;
+app.loggedIn = true;
 app.name = '';
 app.email = '';
 app.password = '';
@@ -23,6 +23,8 @@ app.postAge = 0;
 app.radius = 0;
 app.radiusUnits = 'km';
 app.jobType = '';
+
+app.newApplicationClicks = 0;
 
 // Initializes Firebase
 app.initializeFirebase = function() {
@@ -362,6 +364,44 @@ app.checkAnalyzeForm = function() {
   }
 }
 
+// Adds a row to the application overview table
+app.addApplication = function() {
+  if($('.content-inner--overview tr').length === 1) {
+    $('.content-inner--overview table tr:first-of-type').prepend(`<th></th>`);
+  }
+
+  $('.content-inner--overview table').append(`<tr>
+    <td><i class="fa fa-times" aria-hidden="true"></i></td>
+    <td><input type="text" id="job-title-${app.newApplicationClicks}"></td>
+    <td><input type="text" id="company-${app.newApplicationClicks}"></td>
+    <td><input type="text" id="location-${app.newApplicationClicks}"></td>
+    <td><input type="text" id="job-posting-${app.newApplicationClicks}"></td>
+    <td><input type="text" id="contact-name-${app.newApplicationClicks}"></td>
+    <td><input type="email" id="contact-email-${app.newApplicationClicks}"></td>
+    <td><input type="text" id="contact-title-${app.newApplicationClicks}"></td>
+    <td><input type="date" id="application-date-${app.newApplicationClicks}"></td>
+  </tr>`);
+
+  if($('.content-inner--overview .table').height() > 300) {
+    $('.table').addClass('table--scroll');
+  }
+
+  app.newApplicationClicks++;
+}
+
+// Removes the row in the application over table that was clicked
+app.removeApplication = function(that) {
+  that.parent().parent().remove();
+
+  if($('.content-inner--overview tr').length === 1) {
+    $('.content-inner--overview th:first-of-type').remove();
+  }
+
+  if($('.content-inner--overview .table').height() < 300) {
+    $('.table').removeClass('table--scroll');
+  }
+}
+
 // Opens and closes the primary item in the sidebar
 app.togglePrimaryItem = function(that) {
   $('.sidebar__primary-item').not(that).removeClass('sidebar__primary-item--open').next().slideUp();
@@ -463,6 +503,14 @@ app.init = function() {
     app.getLocation();
     app.getJobs();
     app.setCurrentView($('.sidebar__secondary-item--map'), true);
+  });
+
+  $('.content-inner--overview .table__add-new').on('click', function() {
+    app.addApplication();
+  });
+
+  $('body').on('click', '.content-inner--overview .fa-times', function() {
+    app.removeApplication($(this));
   });
 }
 
