@@ -25,6 +25,7 @@ app.radiusUnits = 'km';
 app.jobType = '';
 
 app.newApplicationClicks = 0;
+app.newInterviewClicks = 0;
 
 // Initializes Firebase
 app.initializeFirebase = function() {
@@ -376,7 +377,7 @@ app.enableDraggableRows = function() {
   });
 }
 
-// Adds row to the application Overview table and corresponding row to the Follow Ups & Results table
+// Adds arow to the application Overview table and a corresponding row to the Follow Ups & Results table
 app.addApplication = function() {
   $('.content-inner--overview tbody').append(`<tr>
     <td><i class="fa fa-arrows" aria-hidden="true"></i></td>
@@ -384,17 +385,6 @@ app.addApplication = function() {
     <td><input type="text" id="company-${(app.newApplicationClicks + 2)}"></td>
     <td><input type="text" id="location-${(app.newApplicationClicks + 2)}"></td>
     <td><input type="text" id="job-posting-${(app.newApplicationClicks + 2)}"></td>
-    <td><input type="text" id="contact-name-${(app.newApplicationClicks + 2)}"></td>
-    <td><input type="email" id="contact-email-${(app.newApplicationClicks + 2)}"></td>
-    <td><input type="text" id="contact-title-${(app.newApplicationClicks + 2)}"></td>
-    <td><input type="date" id="application-date-${(app.newApplicationClicks + 2)}"></td>
-  </tr>`);
-
-  $('.content-inner--follow-ups-results tbody').append(`<tr>
-    <td><i class="fa fa-arrows" aria-hidden="true"></i></td>
-    <td><input type="text" id="job-title-${(app.newApplicationClicks + 2)}"></td>
-    <td><input type="text" id="company-${(app.newApplicationClicks + 2)}"></td>
-    <td><input type="text" id="contact-name-${(app.newApplicationClicks + 2)}"></td>
     <td>
       <select id="result-${(app.newApplicationClicks + 2)}">
         <option selected></option>
@@ -407,17 +397,40 @@ app.addApplication = function() {
         <option>Other</option>
       </select>
     </td>
+    <td><input type="text" id="contact-name-${(app.newApplicationClicks + 2)}"></td>
     <td><input type="date" id="application-date-${(app.newApplicationClicks + 2)}"></td>
-    <td><input type="date" id="follow-up-date-1-${(app.newApplicationClicks + 2)}"></td>
-    <td><input type="date" id="follow-up-date-2-${(app.newApplicationClicks + 2)}"></td>
-    <td><input type="date" id="follow-up-date-3-${(app.newApplicationClicks + 2)}"></td>
   </tr>`);
 
-  if($('.content-inner--overview .table').height() > 300) {
-    $('.table').addClass('table--scroll');
-  }
+  $('.content-inner--follow-ups tbody').append(`<tr>
+    <td><i class="fa fa-arrows" aria-hidden="true"></i></td>
+    <td><input type="text" id="follow-up-job-title-${(app.newApplicationClicks + 2)}"></td>
+    <td><input type="text" id="follow-up-company-${(app.newApplicationClicks + 2)}"></td>
+    <td><input type="text" id="follow-up-contact-name-${(app.newApplicationClicks + 2)}"></td>
+    <td><input type="email" id="follow-up-contact-email-${(app.newApplicationClicks + 2)}"></td>
+    <td><input type="text" id="follow-up-contact-title-${(app.newApplicationClicks + 2)}"></td>
+    <td><input type="date" id="follow-up-application-date-${(app.newApplicationClicks + 2)}"></td>
+    <td><input type="date" id="follow-up-1-${(app.newApplicationClicks + 2)}"></td>
+    <td><input type="date" id="follow-up-2-${(app.newApplicationClicks + 2)}"></td>
+  </tr>`);
 
   app.newApplicationClicks++;
+}
+
+// Adds arow to the Interviews table
+app.addInterview = function() {
+  $('.content-inner--interviews tbody').append(`<tr>
+    <td><i class="fa fa-arrows" aria-hidden="true"></i></td>
+    <td><input type="text" id="interview-job-title-${(app.newInterviewClicks + 2)}"></td>
+    <td><input type="text" id="interview-company-${(app.newInterviewClicks + 2)}"></td>
+    <td><input type="text" id="interview-location-${(app.newInterviewClicks + 2)}"></td>
+    <td><input type="text" id="interview-address-${(app.newInterviewClicks + 2)}"></td>
+    <td><input type="text" id="interview-interviewer-name-${(app.newInterviewClicks + 2)}"></td>
+    <td><input type="text" id="interview-interviewer-title-${(app.newInterviewClicks + 2)}"></td>
+    <td><input type="text" id="interview-time-${(app.newInterviewClicks + 2)}"></td>
+    <td><input type="date" id="interview-date-${(app.newInterviewClicks + 2)}"></td>
+  </tr>`);
+
+  app.newInterviewClicks++;
 }
 
 // Opens and closes the primary item in the sidebar
@@ -526,6 +539,10 @@ app.init = function() {
 
   $('.content-inner--overview .table__add-new').on('click', function() {
     app.addApplication();
+  });
+
+  $('.content-inner--interviews .table__add-new').on('click', function() {
+    app.addInterview();
   });
 }
 

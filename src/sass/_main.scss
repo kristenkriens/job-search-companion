@@ -80,12 +80,12 @@
   }
 }
 
-.follow-ups-results {
-  .content-inner--follow-ups-results {
+.follow-ups {
+  .content-inner--follow-ups {
     display: block;
   }
 
-  .sidebar__secondary-item--follow-ups-results {
+  .sidebar__secondary-item--follow-ups {
     background-color: $dark-blue-blurple;
 
     &:hover {
@@ -94,12 +94,12 @@
   }
 }
 
-.interview-tracker {
-  .content-inner--interview-tracker {
+.interviews {
+  .content-inner--interviews {
     display: block;
   }
 
-  .sidebar__secondary-item--interview-tracker {
+  .sidebar__secondary-item--interviews {
     background-color: $dark-blue-blurple;
 
     &:hover {

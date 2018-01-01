@@ -27,8 +27,8 @@
         <li class="sidebar__primary-item"><i class="fa fa-book" aria-hidden="true"></i>Track Applications</li>
         <ul class="sidebar__secondary">
           <li class="sidebar__secondary-item sidebar__secondary-item--overview">Overview</li>
-          <li class="sidebar__secondary-item sidebar__secondary-item--follow-ups-results">Follow Ups & Results</li>
-          <li class="sidebar__secondary-item sidebar__secondary-item--interview-tracker">Interview Tracker</li>
+          <li class="sidebar__secondary-item sidebar__secondary-item--follow-ups">Follow Ups</li>
+          <li class="sidebar__secondary-item sidebar__secondary-item--interviews">Interviews</li>
         </ul>
         <li class="sidebar__primary-item"><i class="fa fa-line-chart" aria-hidden="true"></i>Analyze</li>
         <ul class="sidebar__secondary">
@@ -144,9 +144,8 @@
                   <th>Company</th>
                   <th>Location</th>
                   <th>Job Posting</th>
+                  <th>Result</th>
                   <th>Contact Name</th>
-                  <th>Contact Email</th>
-                  <th>Contact Title</th>
                   <th>Application Date</th>
                 </tr>
               </thead>
@@ -157,9 +156,19 @@
                   <td><input type="text" id="company-1"></td>
                   <td><input type="text" id="location-1"></td>
                   <td><input type="text" id="job-posting-1"></td>
+                  <td>
+                    <select id="result-1">
+                      <option selected></option>
+                      <option>Interview</option>
+                      <option>Accepted offer</option>
+                      <option>Declined offer</option>
+                      <option>No response</option>
+                      <option>No offer</option>
+                      <option>Declined</option>
+                      <option>Other</option>
+                    </select>
+                  </td>
                   <td><input type="text" id="contact-name-1"></td>
-                  <td><input type="email" id="contact-email-1"></td>
-                  <td><input type="text" id="contact-title-1"></td>
                   <td><input type="date" id="application-date-1"></td>
                 </tr>
               </tbody>
@@ -170,7 +179,7 @@
           <button class="table__save">Save</button>
         </div>
       </div>
-      <div class="content-inner content-inner--follow-ups-results">
+      <div class="content-inner content-inner--follow-ups">
         <div class="content-inner__logged-out">
           <h3>You need to be logged in to view this page!</h3>
           <button class="login">Log In</button>
@@ -184,35 +193,24 @@
                   <th>Job Title</th>
                   <th>Company</th>
                   <th>Contact Name</th>
-                  <th>Result</th>
+                  <th>Contact Email</th>
+                  <th>Contact Title</th>
                   <th>Application Date</th>
-                  <th>Follow Up Date #1</th>
-                  <th>Follow Up Date #2</th>
-                  <th>Follow Up Date #3</th>
+                  <th>Follow Up #1</th>
+                  <th>Follow Up #2</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
                   <td><i class="fa fa-arrows" aria-hidden="true"></i></td>
-                  <td><input type="text" id="job-title-1"></td>
-                  <td><input type="text" id="company-1"></td>
-                  <td><input type="text" id="contact-name-1"></td>
-                  <td>
-                    <select id="result-1">
-                      <option selected></option>
-                      <option>Interview</option>
-                      <option>Accepted offer</option>
-                      <option>Declined offer</option>
-                      <option>No response</option>
-                      <option>No offer</option>
-                      <option>Declined</option>
-                      <option>Other</option>
-                    </select>
-                  </td>
-                  <td><input type="date" id="application-date-1"></td>
-                  <td><input type="date" id="follow-up-date-1-1"></td>
-                  <td><input type="date" id="follow-up-date-2-1"></td>
-                  <td><input type="date" id="follow-up-date-3-1"></td>
+                  <td><input type="text" id="follow-up-job-title-1"></td>
+                  <td><input type="text" id="follow-up-company-1"></td>
+                  <td><input type="text" id="follow-up-contact-name-1"></td>
+                  <td><input type="email" id="follow-up-contact-email-1"></td>
+                  <td><input type="text" id="follow-up-contact-title-1"></td>
+                  <td><input type="date" id="follow-up-application-date-1"></td>
+                  <td><input type="date" id="follow-up-1-1"></td>
+                  <td><input type="date" id="follow-up-2-1"></td>
                 </tr>
               </tbody>
             </table>
@@ -221,13 +219,45 @@
           <button class="table__save">Save</button>
         </div>
       </div>
-      <div class="content-inner content-inner--interview-tracker">
+      <div class="content-inner content-inner--interviews">
         <div class="content-inner__logged-out">
           <h3>You need to be logged in to view this page!</h3>
           <button class="login">Log In</button>
         </div>
         <div class="content-inner__logged-in">
-          <h3>You don't have any interviews yet!</h3>
+          <div class="table">
+            <table class="table-inner">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>Job Title</th>
+                  <th>Company</th>
+                  <th>Location</th>
+                  <th>Address</th>
+                  <th>Interviewer Name</th>
+                  <th>Interviewer Title</th>
+                  <th>Date</th>
+                  <th>Time</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><i class="fa fa-arrows" aria-hidden="true"></i></td>
+                  <td><input type="text" id="interview-job-title-1"></td>
+                  <td><input type="text" id="interview-company-1"></td>
+                  <td><input type="text" id="interview-location-1"></td>
+                  <td><input type="text" id="interview-address-1"></td>
+                  <td><input type="text" id="interview-interviewer-name-1"></td>
+                  <td><input type="text" id="interview-interviewer-title-1"></td>
+                  <td><input type="text" id="interview-time-1"></td>
+                  <td><input type="date" id="interview-date-1"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="table__delete"><i class="fa fa-trash" aria-hidden="true"></i> Drag row here to delete</div>
+          <button class="table__add-new">Add New</button>
+          <button class="table__save">Save</button>
         </div>
       </div>
       <div class="content-inner content-inner--analyze-applications">
