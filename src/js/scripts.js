@@ -458,6 +458,57 @@ app.setCurrentView = function(that, empty) {
   }
 }
 
+app.enableApplicationsChart = function() {
+  Highcharts.chart('applications-chart', {
+    chart: {
+      plotBackgroundColor: null,
+      plotBorderWidth: null,
+      plotShadow: false,
+      type: 'pie'
+    },
+    title: {
+      text: 'Job Application Results'
+    },
+    tooltip: {
+      pointFormat: '<b>{point.percentage:.1f}%</b>'
+    },
+    plotOptions: {
+      pie: {
+        allowPointSelect: true,
+        cursor: 'pointer',
+        dataLabels: {
+          enabled: false
+        },
+        showInLegend: true
+      }
+    },
+    series: [{
+      data: [{
+        name: 'Interview',
+        y: 20
+      }, {
+        name: 'Accepted offer',
+        y: 15,
+      }, {
+        name: 'Declined offer',
+        y: 15
+      }, {
+        name: 'No response',
+        y: 17
+      }, {
+        name: 'No offer',
+        y: 13
+      }, {
+        name: 'Declined',
+        y: 10
+      }, {
+        name: 'Other',
+        y: 10
+      }]
+    }]
+  });
+}
+
 // Initializes app
 app.init = function() {
   app.initializeFirebase();
@@ -466,6 +517,7 @@ app.init = function() {
   app.getIpAddress();
   app.enableAutocomplete();
   app.enableDraggableRows();
+  app.enableApplicationsChart();
 
   $('body').on('submit', 'form', function(e) {
     e.preventDefault();
