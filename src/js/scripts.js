@@ -364,14 +364,22 @@ app.checkAnalyzeForm = function() {
   }
 }
 
-// Adds a row to the application overview table
-app.addApplication = function() {
-  if($('.content-inner--overview tr').length === 1) {
-    $('.content-inner--overview thead tr:first-of-type').prepend(`<th></th>`);
-  }
+// Enables drag and drop of applications and deletes applications when dropped over delete div
+app.enableDraggableRows = function() {
+  $('tbody').sortable().disableSelection();
 
+  $('.table__delete').droppable({
+    accept: 'tr',
+    drop: function(event, ui) {
+      ui.helper.remove();
+    }
+  });
+}
+
+// Adds row to the application Overview table and corresponding row to the Follow Ups & Results table
+app.addApplication = function() {
   $('.content-inner--overview tbody').append(`<tr>
-    <td><i class="fa fa-times" aria-hidden="true"></i></td>
+    <td><i class="fa fa-arrows" aria-hidden="true"></i></td>
     <td><input type="text" id="job-title-${(app.newApplicationClicks + 2)}"></td>
     <td><input type="text" id="company-${(app.newApplicationClicks + 2)}"></td>
     <td><input type="text" id="location-${(app.newApplicationClicks + 2)}"></td>
@@ -382,24 +390,34 @@ app.addApplication = function() {
     <td><input type="date" id="application-date-${(app.newApplicationClicks + 2)}"></td>
   </tr>`);
 
+  $('.content-inner--follow-ups-results tbody').append(`<tr>
+    <td><i class="fa fa-arrows" aria-hidden="true"></i></td>
+    <td><input type="text" id="job-title-${(app.newApplicationClicks + 2)}"></td>
+    <td><input type="text" id="company-${(app.newApplicationClicks + 2)}"></td>
+    <td><input type="text" id="contact-name-${(app.newApplicationClicks + 2)}"></td>
+    <td>
+      <select id="result-${(app.newApplicationClicks + 2)}">
+        <option selected></option>
+        <option>Interview</option>
+        <option>Accepted offer</option>
+        <option>Declined offer</option>
+        <option>No response</option>
+        <option>No offer</option>
+        <option>Declined</option>
+        <option>Other</option>
+      </select>
+    </td>
+    <td><input type="date" id="application-date-${(app.newApplicationClicks + 2)}"></td>
+    <td><input type="date" id="follow-up-date-1-${(app.newApplicationClicks + 2)}"></td>
+    <td><input type="date" id="follow-up-date-2-${(app.newApplicationClicks + 2)}"></td>
+    <td><input type="date" id="follow-up-date-3-${(app.newApplicationClicks + 2)}"></td>
+  </tr>`);
+
   if($('.content-inner--overview .table').height() > 300) {
     $('.table').addClass('table--scroll');
   }
 
   app.newApplicationClicks++;
-}
-
-// Removes the row in the application over table that was clicked
-app.removeApplication = function(that) {
-  that.parent().remove();
-
-  if($('.content-inner--overview tr').length === 1) {
-    $('.content-inner--overview thead th:first-of-type').remove();
-  }
-
-  if($('.content-inner--overview .table').height() < 300) {
-    $('.table').removeClass('table--scroll');
-  }
 }
 
 // Opens and closes the primary item in the sidebar
@@ -434,6 +452,7 @@ app.init = function() {
   app.setCurrentView($('.sidebar__secondary-item--search'));
   app.getIpAddress();
   app.enableAutocomplete();
+  app.enableDraggableRows();
 
   $('body').on('submit', 'form', function(e) {
     e.preventDefault();
@@ -507,10 +526,6 @@ app.init = function() {
 
   $('.content-inner--overview .table__add-new').on('click', function() {
     app.addApplication();
-  });
-
-  $('body').on('click', '.content-inner--overview td:first-of-type', function() {
-    app.removeApplication($(this));
   });
 }
 

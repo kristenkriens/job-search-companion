@@ -27,7 +27,7 @@
         <li class="sidebar__primary-item"><i class="fa fa-book" aria-hidden="true"></i>Track Applications</li>
         <ul class="sidebar__secondary">
           <li class="sidebar__secondary-item sidebar__secondary-item--overview">Overview</li>
-          <li class="sidebar__secondary-item sidebar__secondary-item--follow-up">Follow Ups</li>
+          <li class="sidebar__secondary-item sidebar__secondary-item--follow-ups-results">Follow Ups & Results</li>
           <li class="sidebar__secondary-item sidebar__secondary-item--interview-tracker">Interview Tracker</li>
         </ul>
         <li class="sidebar__primary-item"><i class="fa fa-line-chart" aria-hidden="true"></i>Analyze</li>
@@ -147,12 +147,12 @@
                   <th>Contact Name</th>
                   <th>Contact Email</th>
                   <th>Contact Title</th>
-                  <th>Date</th>
+                  <th>Application Date</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td><i class="fa fa-times" aria-hidden="true"></i></td>
+                  <td><i class="fa fa-arrows" aria-hidden="true"></i></td>
                   <td><input type="text" id="job-title-1"></td>
                   <td><input type="text" id="company-1"></td>
                   <td><input type="text" id="location-1"></td>
@@ -165,17 +165,60 @@
               </tbody>
             </table>
           </div>
+          <div class="table__delete"><i class="fa fa-trash" aria-hidden="true"></i> Drag row here to delete</div>
           <button class="table__add-new">Add New</button>
           <button class="table__save">Save</button>
         </div>
       </div>
-      <div class="content-inner content-inner--follow-up">
+      <div class="content-inner content-inner--follow-ups-results">
         <div class="content-inner__logged-out">
           <h3>You need to be logged in to view this page!</h3>
           <button class="login">Log In</button>
         </div>
         <div class="content-inner__logged-in">
-          <h3>You haven't applied to any jobs yet!</h3>
+          <div class="table">
+            <table class="table-inner">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>Job Title</th>
+                  <th>Company</th>
+                  <th>Contact Name</th>
+                  <th>Result</th>
+                  <th>Application Date</th>
+                  <th>Follow Up Date #1</th>
+                  <th>Follow Up Date #2</th>
+                  <th>Follow Up Date #3</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><i class="fa fa-arrows" aria-hidden="true"></i></td>
+                  <td><input type="text" id="job-title-1"></td>
+                  <td><input type="text" id="company-1"></td>
+                  <td><input type="text" id="contact-name-1"></td>
+                  <td>
+                    <select id="result-1">
+                      <option selected></option>
+                      <option>Interview</option>
+                      <option>Accepted offer</option>
+                      <option>Declined offer</option>
+                      <option>No response</option>
+                      <option>No offer</option>
+                      <option>Declined</option>
+                      <option>Other</option>
+                    </select>
+                  </td>
+                  <td><input type="date" id="application-date-1"></td>
+                  <td><input type="date" id="follow-up-date-1-1"></td>
+                  <td><input type="date" id="follow-up-date-2-1"></td>
+                  <td><input type="date" id="follow-up-date-3-1"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="table__delete"><i class="fa fa-trash" aria-hidden="true"></i> Drag row here to delete</div>
+          <button class="table__save">Save</button>
         </div>
       </div>
       <div class="content-inner content-inner--interview-tracker">
@@ -211,6 +254,10 @@
     <p>&copy; <a href="http://kristenkriens.com" target="_blank">Kristen Kriens</a> 2017</p>
   </footer>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script
+  src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+  integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+  crossorigin="anonymous"></script>
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA5eex_nI4Hor9fxyrk_TWlfDdmuZyC2wo&libraries=places" type="text/javascript"></script>
   <script src='https://api.mapbox.com/mapbox.js/v3.1.1/mapbox.js'></script>
   <script src="https://www.gstatic.com/firebasejs/4.8.1/firebase.js"></script>
