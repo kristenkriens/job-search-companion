@@ -6,6 +6,7 @@ app.indeedApiUrl = 'http://api.indeed.com/ads/apisearch';
 app.indeedApiKey = '';
 
 app.loggedIn = true;
+app.id = '';
 app.name = '';
 app.email = '';
 app.password = '';
@@ -192,6 +193,7 @@ app.getUserData = function() {
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
       app.name = user.displayName;
+      app.id = user.uid;
 
       $('.topbar__profile-name').text(app.name);
     }
@@ -458,7 +460,7 @@ app.saveTableData = function() {
       array.push(arrayItem);
     });
 
-    firebase.database().ref(currentClass).set(array);
+    firebase.database().ref(currentClass).child('users/' + firebase.auth().currentUser.uid).set(array);
   });
 }
 
@@ -478,16 +480,18 @@ app.getTableData = function(that) {
 app.setTableData = function(data, currentClass) {
   $(`.content-inner--${currentClass} tbody`).empty();
 
-  data.forEach(function(item, i) {
+  let userData = data.users[app.id];
+
+  userData.forEach(function(item, i) {
     if(currentClass === 'overview') {
       $('.content-inner--overview tbody').append(`<tr>
         <td><i class="fa fa-sort" aria-hidden="true"></i></td>
-        <td><input type="text" id="job-title-${(i + 1)}" class="job-title" value="${data[i]['job-title']}"></td>
-        <td><input type="text" id="company-${(i + 1)}" class="company" value="${data[i]['company']}"></td>
-        <td><input type="text" id="location-${(i + 1)}" class="location" value="${data[i]['location']}"></td>
-        <td><input type="text" id="job-posting-${(i + 1)}" class="job-posting" value="${data[i]['job-posting']}"></td>
+        <td><input type="text" id="job-title-${(i + 1)}" class="job-title" value="${userData[i]['job-title']}"></td>
+        <td><input type="text" id="company-${(i + 1)}" class="company" value="${userData[i]['company']}"></td>
+        <td><input type="text" id="location-${(i + 1)}" class="location" value="${userData[i]['location']}"></td>
+        <td><input type="text" id="job-posting-${(i + 1)}" class="job-posting" value="${userData[i]['job-posting']}"></td>
         <td>
-          <select id="result-${(i + 1)}" class="result" value="${data[i]['result']}">
+          <select id="result-${(i + 1)}" class="result" value="${userData[i]['result']}">
             <option selected></option>
             <option>Interview</option>
             <option>Accepted offer</option>
@@ -498,32 +502,32 @@ app.setTableData = function(data, currentClass) {
             <option>Other</option>
           </select>
         </td>
-        <td><input type="text" id="contact-name-${(i + 1)}" class="contact-name" value="${data[i]['contact-name']}"></td>
-        <td><input type="date" id="application-date-${(i + 1)}" class="application-date" value="${data[i]['application-date']}"></td>
+        <td><input type="text" id="contact-name-${(i + 1)}" class="contact-name" value="${userData[i]['contact-name']}"></td>
+        <td><input type="date" id="application-date-${(i + 1)}" class="application-date" value="${userData[i]['application-date']}"></td>
       </tr>`);
     } else if(currentClass === 'follow-ups') {
       $('.content-inner--follow-ups tbody').append(`<tr>
         <td><i class="fa fa-sort" aria-hidden="true"></i></td>
-        <td><input type="text" id="follow-up-job-title-${(i + 1)}" class="job-title" value="${data[i]['job-title']}"></td>
-        <td><input type="text" id="follow-up-company-${(i + 1)}" class="company" value="${data[i]['company']}"></td>
-        <td><input type="text" id="follow-up-contact-name-${(i + 1)}" class="contact-name" value="${data[i]['contact-name']}"></td>
-        <td><input type="email" id="follow-up-contact-email-${(i + 1)}" class="contact-email" value="${data[i]['contact-email']}"></td>
-        <td><input type="text" id="follow-up-contact-title-${(i + 1)}" class="contact-title" value="${data[i]['contact-title']}"></td>
-        <td><input type="date" id="follow-up-application-date-${(i + 1)}" class="application-date" value="${data[i]['application-date']}"></td>
-        <td><input type="date" id="follow-up-1${(i + 1)}" class="follow-up-1" value="${data[i]['follow-up-1']}"></td>
-        <td><input type="date" id="follow-up-2-${(i + 1)}" class="follow-up-2" value="${data[i]['follow-up-2']}"></td>
+        <td><input type="text" id="follow-up-job-title-${(i + 1)}" class="job-title" value="${userData[i]['job-title']}"></td>
+        <td><input type="text" id="follow-up-company-${(i + 1)}" class="company" value="${userData[i]['company']}"></td>
+        <td><input type="text" id="follow-up-contact-name-${(i + 1)}" class="contact-name" value="${userData[i]['contact-name']}"></td>
+        <td><input type="email" id="follow-up-contact-email-${(i + 1)}" class="contact-email" value="${userData[i]['contact-email']}"></td>
+        <td><input type="text" id="follow-up-contact-title-${(i + 1)}" class="contact-title" value="${userData[i]['contact-title']}"></td>
+        <td><input type="date" id="follow-up-application-date-${(i + 1)}" class="application-date" value="${userData[i]['application-date']}"></td>
+        <td><input type="date" id="follow-up-1${(i + 1)}" class="follow-up-1" value="${userData[i]['follow-up-1']}"></td>
+        <td><input type="date" id="follow-up-2-${(i + 1)}" class="follow-up-2" value="${userData[i]['follow-up-2']}"></td>
       </tr>`);
     } else if(currentClass === 'interviews') {
       $('.content-inner--interviews tbody').append(`<tr>
         <td><i class="fa fa-sort" aria-hidden="true"></i></td>
-        <td><input type="text" id="interview-job-title-${(i + 1)}" class="interview-job-title" value="${data[i]['interview-job-title']}"></td>
-        <td><input type="text" id="interview-company-${(i + 1)}" class="interview-company" value="${data[i]['interview-company']}"></td>
-        <td><input type="text" id="interview-location-${(i + 1)}" class="interview-location" value="${data[i]['interview-location']}"></td>
-        <td><input type="text" id="interview-address-${(i + 1)}" class="interview-address" value="${data[i]['interview-address']}"></td>
-        <td><input type="text" id="interview-interviewer-name-${(i + 1)}" class="interviewer-name" value="${data[i]['interviewer-name']}"></td>
-        <td><input type="text" id="interview-interviewer-title-${(i + 1)}" class="interviewer-title" value="${data[i]['interviewer-title']}"></td>
-        <td><input type="text" id="interview-time-${(i + 1)}" class="interview-time" value="${data[i]['interview-time']}"></td>
-        <td><input type="date" id="interview-date-${(i + 1)}" class="interview-date" value="${data[i]['interview-date']}"></td>
+        <td><input type="text" id="interview-job-title-${(i + 1)}" class="interview-job-title" value="${userData[i]['interview-job-title']}"></td>
+        <td><input type="text" id="interview-company-${(i + 1)}" class="interview-company" value="${userData[i]['interview-company']}"></td>
+        <td><input type="text" id="interview-location-${(i + 1)}" class="interview-location" value="${userData[i]['interview-location']}"></td>
+        <td><input type="text" id="interview-address-${(i + 1)}" class="interview-address" value="${userData[i]['interview-address']}"></td>
+        <td><input type="text" id="interview-interviewer-name-${(i + 1)}" class="interviewer-name" value="${userData[i]['interviewer-name']}"></td>
+        <td><input type="text" id="interview-interviewer-title-${(i + 1)}" class="interviewer-title" value="${userData[i]['interviewer-title']}"></td>
+        <td><input type="text" id="interview-time-${(i + 1)}" class="interview-time" value="${userData[i]['interview-time']}"></td>
+        <td><input type="date" id="interview-date-${(i + 1)}" class="interview-date" value="${userData[i]['interview-date']}"></td>
       </tr>`);
     }
   });
