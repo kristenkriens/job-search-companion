@@ -4,8 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta property="og:title" content="Job Search Companion">
+  <meta property="og:image" content="">
+  <meta property="og:url" content="https://kristenkriens.com/job-search-companion">
   <title>Job Search Companion</title>
   <link type="image/png" href="dist/images/favicon.png" rel="icon">
+  <link rel="apple-touch-icon" href="dist/images/favicon.png">
   <link href='https://api.mapbox.com/mapbox.js/v3.1.1/mapbox.css' rel='stylesheet' />
   <link rel="stylesheet" type="text/css" href="dist/css/styles.css">
 </head>
@@ -123,10 +127,10 @@
         </div>
       </div>
       <div id="map" class="content-inner content-inner--map">
-        <h3>Please fill out the form first!</h3>
+        <h3>Please fill out the search form first!</h3>
       </div>
       <div class="content-inner content-inner--list">
-        <h3>Please fill out the form first!</h3>
+        <h3>Please fill out the search form first!</h3>
       </div>
       <div class="content-inner content-inner--listing"></div>
       <div class="content-inner content-inner--overview">
@@ -151,13 +155,13 @@
               </thead>
               <tbody>
                 <tr>
-                  <td><i class="fa fa-arrows" aria-hidden="true"></i></td>
-                  <td><input type="text" id="job-title-1"></td>
-                  <td><input type="text" id="company-1"></td>
-                  <td><input type="text" id="location-1"></td>
-                  <td><input type="text" id="job-posting-1"></td>
+                  <td><i class="fa fa-sort" aria-hidden="true"></i></td>
+                  <td><input type="text" id="job-title-1" class="job-title"></td>
+                  <td><input type="text" id="company-1" class="company"></td>
+                  <td><input type="text" id="location-1" class="location"></td>
+                  <td><input type="text" id="job-posting-1" class="job-posting"></td>
                   <td>
-                    <select id="result-1">
+                    <select id="result-1" class="result">
                       <option selected></option>
                       <option>Interview</option>
                       <option>Accepted offer</option>
@@ -168,8 +172,8 @@
                       <option>Other</option>
                     </select>
                   </td>
-                  <td><input type="text" id="contact-name-1"></td>
-                  <td><input type="date" id="application-date-1"></td>
+                  <td><input type="text" id="contact-name-1" class="contact-name"></td>
+                  <td><input type="date" id="application-date-1" class="application-date"></td>
                 </tr>
               </tbody>
             </table>
@@ -196,21 +200,21 @@
                   <th>Contact Email</th>
                   <th>Contact Title</th>
                   <th>Application Date</th>
-                  <th>Follow Up #1</th>
-                  <th>Follow Up #2</th>
+                  <th>Follow Up 1</th>
+                  <th>Follow Up 2</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td><i class="fa fa-arrows" aria-hidden="true"></i></td>
-                  <td><input type="text" id="follow-up-job-title-1"></td>
-                  <td><input type="text" id="follow-up-company-1"></td>
-                  <td><input type="text" id="follow-up-contact-name-1"></td>
-                  <td><input type="email" id="follow-up-contact-email-1"></td>
-                  <td><input type="text" id="follow-up-contact-title-1"></td>
-                  <td><input type="date" id="follow-up-application-date-1"></td>
-                  <td><input type="date" id="follow-up-1-1"></td>
-                  <td><input type="date" id="follow-up-2-1"></td>
+                  <td><i class="fa fa-sort" aria-hidden="true"></i></td>
+                  <td><input type="text" id="follow-up-job-title-1" class="job-title"></td>
+                  <td><input type="text" id="follow-up-company-1" class="company"></td>
+                  <td><input type="text" id="follow-up-contact-name-1" class="contact-name"></td>
+                  <td><input type="email" id="follow-up-contact-email-1" class="contact-email"></td>
+                  <td><input type="text" id="follow-up-contact-title-1" class="contact-title"></td>
+                  <td><input type="date" id="follow-up-application-date-1" class="application-date"></td>
+                  <td><input type="date" id="follow-up-1-1" class="follow-up-1"></td>
+                  <td><input type="date" id="follow-up-2-1" class="follow-up-2"></td>
                 </tr>
               </tbody>
             </table>
@@ -236,21 +240,21 @@
                   <th>Address</th>
                   <th>Interviewer Name</th>
                   <th>Interviewer Title</th>
-                  <th>Date</th>
                   <th>Time</th>
+                  <th>Date</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td><i class="fa fa-arrows" aria-hidden="true"></i></td>
-                  <td><input type="text" id="interview-job-title-1"></td>
-                  <td><input type="text" id="interview-company-1"></td>
-                  <td><input type="text" id="interview-location-1"></td>
-                  <td><input type="text" id="interview-address-1"></td>
-                  <td><input type="text" id="interview-interviewer-name-1"></td>
-                  <td><input type="text" id="interview-interviewer-title-1"></td>
-                  <td><input type="text" id="interview-time-1"></td>
-                  <td><input type="date" id="interview-date-1"></td>
+                  <td><i class="fa fa-sort" aria-hidden="true"></i></td>
+                  <td><input type="text" id="interview-job-title-1" class="interview-job-title"></td>
+                  <td><input type="text" id="interview-company-1" class="interview-company"></td>
+                  <td><input type="text" id="interview-location-1" class="interview-location"></td>
+                  <td><input type="text" id="interview-address-1" class="interview-address"></td>
+                  <td><input type="text" id="interview-interviewer-name-1" class="interviewer-name"></td>
+                  <td><input type="text" id="interview-interviewer-title-1" class="interviewer-title"></td>
+                  <td><input type="text" id="interview-time-1" class="interview-time"></td>
+                  <td><input type="date" id="interview-date-1" class="interview-date"></td>
                 </tr>
               </tbody>
             </table>
