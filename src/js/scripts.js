@@ -24,7 +24,8 @@ app.radius = 0;
 app.radiusUnits = 'km';
 app.jobType = '';
 
-app.newApplicationClicks = 0;
+app.newOverviewClicks = 0;
+app.newFollowUpsClicks = 0;
 app.newInterviewClicks = 0;
 
 // Initializes Firebase
@@ -377,16 +378,16 @@ app.enableDraggableRows = function() {
   });
 }
 
-// Adds arow to the application Overview table and a corresponding row to the Follow Ups table
-app.addApplication = function() {
+// Adds a row to the application Overview table
+app.addOverview = function() {
   $('.content-inner--overview tbody').append(`<tr>
     <td><i class="fa fa-sort" aria-hidden="true"></i></td>
-    <td><input type="text" id="job-title-${(app.newApplicationClicks + 2)}" class="job-title"></td>
-    <td><input type="text" id="company-${(app.newApplicationClicks + 2)}" class="company"></td>
-    <td><input type="text" id="location-${(app.newApplicationClicks + 2)}" class="location"></td>
-    <td><input type="text" id="job-posting-${(app.newApplicationClicks + 2)}" class="job-posting"></td>
+    <td><input type="text" id="job-title-${(app.newOverviewClicks + 2)}" class="job-title"></td>
+    <td><input type="text" id="company-${(app.newOverviewClicks + 2)}" class="company"></td>
+    <td><input type="text" id="location-${(app.newOverviewClicks + 2)}" class="location"></td>
+    <td><input type="text" id="job-posting-${(app.newOverviewClicks + 2)}" class="job-posting"></td>
     <td>
-      <select id="result-${(app.newApplicationClicks + 2)}" class="result">
+      <select id="result-${(app.newOverviewClicks + 2)}" class="result">
         <option selected></option>
         <option>Interview</option>
         <option>Accepted offer</option>
@@ -397,36 +398,32 @@ app.addApplication = function() {
         <option>Other</option>
       </select>
     </td>
-    <td><input type="text" id="contact-name-${(app.newApplicationClicks + 2)}" class="contact-name"></td>
-    <td><input type="date" id="application-date-${(app.newApplicationClicks + 2)}" class="application-date"></td>
+    <td><input type="text" id="contact-name-${(app.newOverviewClicks + 2)}" class="contact-name"></td>
+    <td><input type="date" id="application-date-${(app.newOverviewClicks + 2)}" class="application-date"></td>
   </tr>`);
 
-  $('.content-inner--follow-ups tbody').append(`<tr>
-    <td><i class="fa fa-sort" aria-hidden="true"></i></td>
-    <td><input type="text" id="follow-up-job-title-${(app.newApplicationClicks + 2)}" class="job-title"></td>
-    <td><input type="text" id="follow-up-company-${(app.newApplicationClicks + 2)}" class="company"></td>
-    <td><input type="text" id="follow-up-contact-name-${(app.newApplicationClicks + 2)}" class="contact-name"></td>
-    <td><input type="email" id="follow-up-contact-email-${(app.newApplicationClicks + 2)}" class="contact-email"></td>
-    <td><input type="text" id="follow-up-contact-title-${(app.newApplicationClicks + 2)}" class="contact-title"></td>
-    <td><input type="date" id="follow-up-application-date-${(app.newApplicationClicks + 2)}" class="application-date"></td>
-    <td><input type="date" id="follow-up-1${(app.newApplicationClicks + 2)}" class="follow-up-1"></td>
-    <td><input type="date" id="follow-up-2-${(app.newApplicationClicks + 2)}" class="follow-up-2"></td>
-  </tr>`);
-
-  app.newApplicationClicks++;
+  app.newOverviewClicks++;
 }
 
-// Updates the Overview and Follow Up views with the corresponding values from the other
-app.updateOverviewFollowUps = function(that) {
-  let currentClass = that.attr('class');
+// Adds a row to the application Follow Ups table
+app.addFollowUps = function() {
+  $('.content-inner--follow-ups tbody').append(`<tr>
+    <td><i class="fa fa-sort" aria-hidden="true"></i></td>
+    <td><input type="text" id="follow-up-job-title-${(app.newFollowUpsClicks + 2)}" class="job-title"></td>
+    <td><input type="text" id="follow-up-company-${(app.newFollowUpsClicks + 2)}" class="company"></td>
+    <td><input type="text" id="follow-up-contact-name-${(app.newFollowUpsClicks + 2)}" class="contact-name"></td>
+    <td><input type="email" id="follow-up-contact-email-${(app.newFollowUpsClicks + 2)}" class="contact-email"></td>
+    <td><input type="text" id="follow-up-contact-title-${(app.newFollowUpsClicks + 2)}" class="contact-title"></td>
+    <td><input type="date" id="follow-up-application-date-${(app.newFollowUpsClicks + 2)}" class="application-date"></td>
+    <td><input type="date" id="follow-up-1${(app.newFollowUpsClicks + 2)}" class="follow-up-1"></td>
+    <td><input type="date" id="follow-up-2-${(app.newFollowUpsClicks + 2)}" class="follow-up-2"></td>
+  </tr>`);
 
-  let currentValue = that.val();
-
-  $(`.${currentClass}`).val(currentValue);
+  app.newFollowUpsClicks++;
 }
 
 // Adds a row to the Interviews table
-app.addInterview = function() {
+app.addInterviews = function() {
   $('.content-inner--interviews tbody').append(`<tr>
     <td><i class="fa fa-sort" aria-hidden="true"></i></td>
     <td><input type="text" id="interview-job-title-${(app.newInterviewClicks + 2)}" class="interview-job-title"></td>
@@ -688,20 +685,19 @@ app.init = function() {
     app.setCurrentView($('.sidebar__secondary-item--map'), true);
   });
 
-  $('.content-inner--overview .table__add-new').on('click', function() {
-    app.addApplication();
-  });
-
-  $('.content-inner--overview td, .content-inner--follow-ups td').children().on('keyup', function() {
-    app.updateOverviewFollowUps($(this));
-  });
-
-  $('.content-inner--interviews .table__add-new').on('click', function() {
-    app.addInterview();
+  $('.content-inner .table__add-new').on('click', function() {
+    if($(this).parent().parent().hasClass('content-inner--overview')) {
+      app.addOverview();
+    } else if($(this).parent().parent().hasClass('content-inner--follow-ups')) {
+      app.addFollowUps();
+    } else if($(this).parent().parent().hasClass('content-inner--interviews')) {
+      app.addInterviews();
+    }
   });
 
   $('.content-inner .table__save').on('click', function() {
     app.saveTableData();
+    app.getTableData($(this).parent().parent());
   });
 
   $('.sidebar__secondary:nth-of-type(2) .sidebar__secondary-item').on('click', function() {
