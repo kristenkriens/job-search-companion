@@ -281,6 +281,21 @@
     }
   }
 
+  &__image {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    margin-right: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+
+    img {
+      height: 100%;
+    }
+  }
+
   &__profile {
     text-align: right;
     padding-left: 10px;
@@ -298,7 +313,7 @@
         }
       }
 
-      .fa {
+      .fa:not(.fa-user) {
         margin-left: 10px
       }
     }
@@ -571,7 +586,7 @@
   background-color: rgba(0, 0, 0, 0.2);
 
   h2 {
-    margin-bottom: 20px;
+    margin-bottom: 30px;
   }
 
   &__content {
@@ -599,6 +614,40 @@
       position: relative;
       top: -3px;
       left: 1px;
+    }
+  }
+
+  &__skills {
+    list-style-type: none;
+    margin: 0 -5px 10px;
+    padding: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+
+    &--hidden {
+      display: none;
+    }
+
+    li {
+      width: calc(50% - 10px);
+      margin: 0 5px 10px;
+      padding: 5px;
+      background-color: $lightest-grey;
+    }
+
+    .fa {
+      cursor: pointer;
+      font-size: 13px;
+      position: relative;
+      top: -1px;
+      margin-left: 5px;
+      transition: 200ms color ease;
+
+      &:hover {
+        color: $red;
+      }
     }
   }
 

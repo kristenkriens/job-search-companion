@@ -196,3 +196,47 @@ input[type="date"] {
 	  display: none;
 	}
 }
+
+input[type="file"] {
+	outline: none;
+
+	+ label {
+		background-color: $lightest-grey;
+		border: none;
+		outline: none;
+		border-radius: 50%;
+		font-weight: 300;
+		margin: 0 auto;
+		width: 175px;
+		height: 175px;
+		overflow: hidden;
+		cursor: pointer;
+		position: relative;
+		transition: 200ms opacity ease;
+
+		.fa {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			font-size: 25px;
+			color: rgba(#333, 0.65);
+			background-color: rgba(#666, 0.35);
+			padding: 20px;
+			border-radius: 50%;
+		}
+
+		img {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			height: 100%;
+		}
+	}
+
+	&:focus + label,
+	+ label:hover {
+    opacity: 0.75;
+	}
+}

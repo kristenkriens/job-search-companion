@@ -5,11 +5,13 @@ app.ipAddressFinderUrl = 'https://ipapi.co/json';
 app.indeedApiUrl = 'http://api.indeed.com/ads/apisearch';
 app.indeedApiKey = '';
 
-app.loggedIn = true;
+app.loggedIn = false;
 app.id = '';
 app.name = '';
 app.email = '';
+app.image = '';
 app.password = '';
+app.skills = [];
 
 app.map;
 
@@ -36,7 +38,7 @@ app.initializeFirebase = function() {
     authDomain: "job-search-compa-1514144240150.firebaseapp.com",
     databaseURL: "https://job-search-compa-1514144240150.firebaseio.com",
     projectId: "job-search-compa-1514144240150",
-    storageBucket: "",
+    storageBucket: "gs://job-search-compa-1514144240150.appspot.com",
     messagingSenderId: "1065267185812"
   });
 }
@@ -73,10 +75,6 @@ app.generateOverlay = function(context, text) {
         <h2>Create Acount</h2>
         <form class="overlay__form">
           <div class="form__element">
-            <label for="name">Name</label>
-            <input type="text" id="name">
-          </div>
-          <div class="form__element">
             <label for="email">Email</label>
             <input type="email" id="email" placeholder="e.g. fake-email@gmail.com">
           </div>
@@ -85,14 +83,47 @@ app.generateOverlay = function(context, text) {
             <input type="password" id="password">
           </div>
           <div class="form__element">
-            <label for="reEnterPassword">Re-enter Password</label>
-            <input type="password" id="reEnterPassword">
+            <label for="confirmPassword">Confirm Password</label>
+            <input type="password" id="confirmPassword">
           </div>
           <button class="overlay__submit" disabled>Submit</button>
           <p class="overlay__link">Already have an account? Login</p>
         </form>
       </div>
     </div>`).hide().appendTo('body').fadeIn(500);
+  } else if(context === 'my-profile') {
+    $(`<div class="overlay overlay--my-profile">
+      <div class="overlay__content">
+        <button class="overlay__close"><i class="fa fa-times" aria-hidden="true"></i></button>
+        <h2>My Profile</h2>
+        <form class="overlay__form">
+          <div class="form__element">
+            <input type="file" id="image" accept="image/*" class="accessible">
+            <label for="image">
+              <img src="${(app.image ? app.image : 'dist/images/blank-user.gif')}">
+              <i class="fa fa-camera" aria-hidden="true"></i>
+            </label>
+          </div>
+          <div class="form__element">
+            <label for="name">Name</label>
+            <input type="text" id="name" value="${(app.name ? app.name : 'Anonymous')}">
+          </div>
+          <div class="form__element">
+            <label for="skills">Skills</label>
+            <input type="text" id="skills" placeholder="Please enter 1 skill at a time">
+            <button type="button" class="units units--square add-skills">
+              <i class="fa fa-plus" aria-hidden="true"></i>
+              <span class="accessible">Add Skill</span>
+            </button>
+          </div>
+          <ul class="overlay__skills overlay__skills--hidden"></ul>
+          <button class="overlay__submit">Submit</button>
+          <p class="overlay__link">Skip</p>
+        </form>
+      </div>
+    </div>`).hide().appendTo('body').fadeIn(500);
+
+    app.getUserData('profile');
   } else if(context === 'text') {
     $(`<div class="overlay overlay--error">
       <div class="overlay__content">
@@ -101,14 +132,18 @@ app.generateOverlay = function(context, text) {
         <p>${text}</p>
       </div>
     </div>`).hide().appendTo('body').fadeIn(500);
+
+    $('.overlay__close').focus();
   }
 }
 
-// Removes the overlay
+// Removes the overlay and calls checkLoggedIn function
 app.removeOverlay = function(that) {
   $('.overlay').fadeOut(250, function() {
     $(this).remove();
   });
+
+  app.checkLoggedIn();
 }
 
 // Checks if email address is valid
@@ -128,10 +163,9 @@ app.checkOverlayForm = function() {
   app.password = $('.overlay input#password').val();
 
   if($('.overlay').hasClass('overlay--create-account')) {
-    app.name = $('.overlay--create-account input#name').val();
-    let reEnterPassword = $('.overlay--create-account input#reEnterPassword').val();
+    let confirmPassword = $('.overlay--create-account input#confirmPassword').val();
 
-    if(app.name !== '' && app.checkEmail(app.email) && app.password !== '' && (app.password === reEnterPassword)) {
+    if(app.checkEmail(app.email) && app.password !== '' && (app.password === confirmPassword)) {
       $('.overlay__submit').removeAttr('disabled');
   	} else {
       $('.overlay__submit').attr('disabled', 'disabled');
@@ -148,18 +182,84 @@ app.checkOverlayForm = function() {
 // Creates a user account
 app.createAccount = function() {
   app.email = $('.overlay--create-account input#email').val();
+  app.name = app.email;
   app.password = $('.overlay--create-account input#password').val();
-  app.name = $('.overlay--create-account input#name').val();
 
   $('.overlay__submit').html('Submit <i class="fa fa-spinner fa-pulse fa-fw"></i><span class="accessible">Loading...</span>');
 
   firebase.auth().createUserWithEmailAndPassword(app.email, app.password).then(function(user) {
-    app.generateOverlay('login');
+    app.loggedIn = true;
+
+    app.generateOverlay('my-profile');
 
     return user.updateProfile({displayName: app.name});
   }).catch(function(error) {
     app.generateOverlay('text', error.message);
   });
+}
+
+// Adds a skill to the skill list
+app.addSkill = function() {
+  let skill = $('.overlay--my-profile input#skills').val();
+
+  app.skills.push(skill);
+
+  if(app.skills.length > 0) {
+    $('.overlay--my-profile .overlay__skills').removeClass('overlay__skills--hidden');
+  }
+
+  $(`<li>${skill} <i class="fa fa-close" aria-hidden="true"></i></li>`).hide().appendTo('.overlay--my-profile .overlay__skills').fadeIn(500);
+
+  $('.overlay--my-profile input#skills').val('').focus();
+}
+
+// Removes a skill from the skill list
+app.removeSkill = function(that) {
+  let index = that.parent().index();
+  app.skills.splice(index, 1);
+
+  that.parent().remove();
+}
+
+// Adds/edits user profile (name, image, skills) for account
+app.addEditProfile = function() {
+  app.name = $('.overlay--my-profile input#name').val();
+  app.image = $('.overlay--my-profile input#image')[0].files[0];
+
+  if(app.name === '') {
+    app.name = 'Anonymous';
+  }
+
+  $('.overlay__submit').html('Submit <i class="fa fa-spinner fa-pulse fa-fw"></i><span class="accessible">Loading...</span>');
+
+  let user = firebase.auth().currentUser;
+
+  if(typeof app.image === 'undefined' || app.image === null || app.image === '') {
+    user.updateProfile({
+      displayName: app.name
+    }).then(function() {
+      app.removeOverlay();
+    }).catch(function(error) {
+      app.generateOverlay('text', error.message);
+    });
+  } else {
+    let imageURL = firebase.storage().ref(user.uid + '/image/' + app.image.name);
+
+    imageURL.put(app.image).then(function(result) {
+      imageURL.getDownloadURL().then(function(result) {
+        user.updateProfile({
+          displayName: app.name,
+          photoURL: result
+        }).then(function() {
+          app.removeOverlay();
+        }).catch(function(error) {
+          app.generateOverlay('text', error.message);
+        });
+      });
+    });
+  }
+
+  firebase.database().ref('skills').child('users/' + user.uid).set(app.skills);
 }
 
 // Logs user into their account
@@ -171,7 +271,6 @@ app.login = function() {
 
   firebase.auth().signInWithEmailAndPassword(app.email, app.password).then(function() {
     app.loggedIn = true;
-    app.checkLoggedIn();
     app.removeOverlay();
   }).catch(function(error) {
     app.generateOverlay('text', error.message);
@@ -189,15 +288,36 @@ app.logout = function() {
 }
 
 // Gets user data from Firebase
-app.getUserData = function() {
+app.getUserData = function(context) {
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
       app.name = user.displayName;
       app.id = user.uid;
+      app.image = user.photoURL;
 
       $('.topbar__profile-name').text(app.name);
+
+      if(typeof app.image === 'undefined' || app.image === null || app.image === '') {
+        $('.topbar__image img, .overlay--my-profile img').attr('src', 'dist/images/blank-user.gif');
+      } else {
+        $('.topbar__image img, .overlay--my-profile img').attr('src', app.image);
+      }
     }
   });
+
+  if(context === 'profile') {
+    firebase.database().ref('skills').once('value', function(snapshot) {
+  		let values = snapshot.val();
+
+      if(values) {
+        $('.overlay--my-profile .overlay__skills').removeClass('overlay__skills--hidden');
+
+        values.users[app.id].forEach(function(value) {
+          $(`<li>${value} <i class="fa fa-close" aria-hidden="true"></i></li>`).hide().appendTo('.overlay--my-profile .overlay__skills').fadeIn(500);
+        });
+      }
+  	});
+  }
 }
 
 // Checks if the user is logged in and shows the correct topbar info
@@ -236,7 +356,7 @@ app.enableAutocomplete = function() {
 app.toggleProfileDropdown = function() {
   $('.topbar__profile-dropdown').fadeToggle();
 
-  $('.topbar__profile-status--logged-in .fa').toggleClass('fa-angle-down fa-angle-up');
+  $('.topbar__profile-status--logged-in .fa:not(.fa-user)').toggleClass('fa-angle-down fa-angle-up');
 }
 
 // Gets geolocation and converts it to an address
@@ -472,7 +592,9 @@ app.getTableData = function(that) {
   firebase.database().ref(currentClass).once('value', function(snapshot) {
 		let values = snapshot.val();
 
-    app.setTableData(values, currentClass);
+    if(values) {
+      app.setTableData(values, currentClass);
+    }
 	});
 }
 
@@ -643,6 +765,10 @@ app.init = function() {
     app.generateOverlay('login');
   });
 
+  $('.my-profile').on('click', function() {
+    app.generateOverlay('my-profile');
+  });
+
   $('body').on('click', '.overlay--login .overlay__link', function() {
     app.generateOverlay('create-account');
   });
@@ -651,8 +777,24 @@ app.init = function() {
     app.generateOverlay('login');
   });
 
+  $('body').on('click', '.overlay--my-profile .overlay__link', function() {
+    app.removeOverlay();
+  });
+
   $('body').on('submit', '.overlay--create-account form', function() {
     app.createAccount();
+  });
+
+  $('body').on('click', '.overlay--my-profile .add-skills', function() {
+    app.addSkill();
+  });
+
+  $('body').on('click', '.overlay--my-profile .overlay__skills li .fa', function() {
+    app.removeSkill($(this));
+  });
+
+  $('body').on('submit', '.overlay--my-profile form', function() {
+    app.addEditProfile();
   });
 
   $('body').on('submit', '.overlay--login form', function() {
@@ -706,6 +848,10 @@ app.init = function() {
 
   $('.sidebar__secondary:nth-of-type(2) .sidebar__secondary-item').on('click', function() {
     app.getTableData($(this));
+  });
+
+  $('body').on('change', 'input#image', function() {
+    $('.overlay--my-profile img').attr('src', window.URL.createObjectURL($(this)[0].files[0]));
   });
 }
 
